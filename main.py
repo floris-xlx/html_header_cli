@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import sys
 import os
+import time
 
 def fetch_html_head(url):
     if not url.startswith("http://") and not url.startswith("https://"):
@@ -15,6 +16,10 @@ def fetch_html_head(url):
         service = Service(executable_path='./chromedriver.exe')  
         driver = webdriver.Chrome(service=service, options=chrome_options)
         driver.get(url)
+        
+        # Wait for 2 seconds to ensure everything is loaded
+        time.sleep(2)
+        
         head = driver.find_element(By.TAG_NAME, 'head')
         if head:
             html_head = head.get_attribute('outerHTML')
